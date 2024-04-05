@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, React, useContext, useEffect, memo, useCallback } from 'react';
 
-function App() {
+const Button = memo(function Button() {
+  console.log('Button重新渲染了');
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <button>按钮</button>
+    </>
+  );
+});
+export default function App() {
+  const [state, setState] = useState(0);
+
+  const handleClick = () => {
+    setState(state + 1);
+  };
+  useEffect(() => {
+    console.log('组件渲染');
+  }, [state]);
+
+  const handleClickBtn = useCallback(() => {
+    console.log('点击了按钮');
+  }, []);
+  return (
+    <>
+      <div>
+        <span>{state}</span>
+        <button onClick={handleClick}>+</button>
+        <Button onClick={handleClickBtn}></Button>
+      </div>
+    </>
   );
 }
-
-export default App;
